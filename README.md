@@ -24,4 +24,7 @@ Sistema web para la gestión de eventos estudiantiles y culturales.
 Instalar dependencias:
 
 ```bash
+node -v ##para saber si tiene node instalado. si no lo tiene se requiere instalar
 npm install
+npx prisma migrate dev
+npm run dev

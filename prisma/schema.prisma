@@ -3,16 +3,16 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
 model Evento {
   id            Int             @id @default(autoincrement())
-  titulo        String          @db.VarChar(150)
+  titulo        String
   fechaHora     DateTime
-  lugar         String          @db.VarChar(150)
-  imagen        String          @db.Text
+  lugar         String
+  imagen        String
   valor         Int             @default(0)
   inscripciones Inscripcion[]
 
@@ -21,8 +21,8 @@ model Evento {
 
 model Inscripcion {
   id       Int    @id @default(autoincrement())
-  nombre   String @db.VarChar(100)
-  email    String @db.VarChar(150)
+  nombre   String
+  email    String
   eventoId Int
 
   evento Evento @relation(fields: [eventoId], references: [id], onDelete: Cascade)
