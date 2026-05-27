@@ -59,6 +59,23 @@ async function borrarInscripcion(id: number) {
   await cargarEventos()
 }
 
+async function eliminarEvento(id: number) {
+  if (confirm('¿Estás seguro de que deseas eliminar este evento?')) {
+    try {
+      await $fetch(`/api/eventos/${id}`, {
+        method: 'DELETE'
+      })
+      
+      mensaje.value = 'Evento eliminado correctamente.'
+      eventoSeleccionado.value = null
+      inscritos.value = []
+      await cargarEventos()
+    } catch (error) {
+      mensaje.value = 'Error al eliminar el evento.'
+    }
+  }
+}
+
 onMounted(async () => {
   await cargarEventos()
 })
@@ -181,12 +198,21 @@ onMounted(async () => {
                 Inscritos: {{ evento._count.inscripciones }}
               </p>
 
-              <button
-                class="mt-3 rounded-lg bg-slate-900 px-3 py-2 text-sm text-white hover:bg-slate-700"
-                @click="verInscritos(evento)"
-              >
-                Ver inscritos
-              </button>
+              <div class="mt-3 flex gap-2">
+                <button
+                  class="rounded-lg bg-slate-900 px-3 py-2 text-sm text-white hover:bg-slate-700"
+                  @click="verInscritos(evento)"
+                >
+                  Ver inscritos
+                </button>
+
+                <button
+                  class="rounded-lg bg-red-600 px-3 py-2 text-sm text-white hover:bg-red-700"
+                  @click="eliminarEvento(evento.id)"
+                >
+                  Eliminar
+                </button>
+              </div>
             </article>
           </div>
         </section>
